@@ -7,12 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("movies")
 public class MovieController {
     @Autowired
     MovieService movieService;
+
     @PostMapping("/add-movie")
     public ResponseEntity<String> addMovie(@RequestBody Movie movie){
         movieService.addMovie(movie);
@@ -26,9 +26,8 @@ public class MovieController {
     }
 
     @PutMapping("/add-movie-director-pair")
-    public ResponseEntity<String> addMovieDirectorPair
-            (@RequestParam String movie,@RequestParam String director){
-        movieService.createMovieDirector(movie,director);
+    public ResponseEntity<String> addMovieDirectorPair(@RequestParam String movie, @RequestParam String director){
+        movieService.createMovieDirectorPair(movie, director);
         return new ResponseEntity<>("New movie-director pair added successfully", HttpStatus.CREATED);
     }
 
@@ -55,20 +54,15 @@ public class MovieController {
         List<String> movies = movieService.findAllMovies();
         return new ResponseEntity<>(movies, HttpStatus.CREATED);
     }
+
     @DeleteMapping("/delete-director-by-name")
     public ResponseEntity<String> deleteDirectorByName(@RequestParam String director){
         movieService.deleteDirector(director);
-        return new ResponseEntity<>(director+" removed successfully",HttpStatus.CREATED);
+        return new ResponseEntity<>(director + " removed successfully", HttpStatus.CREATED);
     }
-
     @DeleteMapping("/delete-all-directors")
     public ResponseEntity<String> deleteAllDirectors(){
         movieService.deleteAllDirectors();
-        return new ResponseEntity<>("All directors deleted successfully",HttpStatus.CREATED);
+        return new ResponseEntity<>("All directors deleted successfully", HttpStatus.CREATED);
     }
-
-
-
-
-
 }
